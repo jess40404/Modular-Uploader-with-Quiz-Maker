@@ -1,0 +1,145 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      TechnoDev
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="quiz-content">
+  <div class="quiz-container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1>Upload a <span class="highlight">document</span> and get exam questions with AI</h1>
+      <p class="description">
+        Create comprehensive assessments from any document using our AI Quiz Generator.
+        Upload your materials and let our intelligent system generate relevant quiz questions.
+        Enter a prompt or upload a file to get started!
+      </p>
+    </div>
+
+    <!-- Tab Selection -->
+    <div class="tab-section">
+      <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange()" class="quiz-tabs">
+        <ion-segment-button value="prompt">
+          <ion-label>By prompt</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="file">
+          <ion-label>By file</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="scanning">
+          <ion-label>By scanning</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" *ngIf="selectedTab === 'prompt'">
+      <div class="input-card">
+        <ion-item lines="none" class="prompt-input-item">
+          <ion-label position="stacked">Enter your subject or content</ion-label>
+          <ion-textarea
+            [(ngModel)]="promptText"
+            placeholder="Describe the topic you want to create quiz questions for..."
+            rows="6"
+            class="prompt-input"
+          ></ion-textarea>
+        </ion-item>
+        <ion-button expand="block" color="primary" (click)="generateFromPrompt()" class="generate-btn">
+          <ion-icon name="sparkles-outline" slot="start"></ion-icon>
+          Generate Quiz Questions
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="selectedTab === 'file'">
+      <div class="upload-card">
+        <div class="upload-area" [ngClass]="{'drag-over': isDragOver}"
+             (drop)="onDrop($event)"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (click)="fileInput.click()">
+          <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+          <h3>Upload or drag and drop a file</h3>
+          <p class="upload-hint">Supported formats: PDF, DOCX, DOC, TXT, PNG, JPG</p>
+        </div>
+        <input #fileInput type="file" hidden (change)="onFileSelected($event)" />
+
+        <!-- File Info -->
+        <div class="file-info" *ngIf="selectedFile">
+          <ion-item lines="none" class="file-item">
+            <ion-icon name="document" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h2>{{ selectedFile.name }}</h2>
+              <p>{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+            </ion-label>
+            <ion-button fill="clear" color="danger" (click)="clearFile()" slot="end">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </div>
+
+        <!-- File Types -->
+        <div class="file-types">
+          <span class="file-type">pdf</span>
+          <span class="file-type">docx</span>
+          <span class="file-type">doc</span>
+          <span class="file-type">txt</span>
+          <span class="file-type">png</span>
+          <span class="file-type">jpg</span>
+        </div>
+
+        <!-- File Size Info -->
+        <p class="file-size-info">
+          Maximum file size is <strong>10 MB</strong>
+        </p>
+
+        <ion-button expand="block" color="primary"
+                   (click)="generateFromFile()"
+                   [disabled]="!selectedFile || isLoading"
+                   class="generate-btn">
+          <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+          <span *ngIf="!isLoading">
+            <ion-icon name="sparkles-outline" slot="start"></ion-icon>
+            Generate Quiz Questions
+          </span>
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="selectedTab === 'scanning'">
+      <div class="input-card">
+        <p class="feature-description">Scan documents using your device camera to extract text and generate quiz questions.</p>
+        <ion-button expand="block" color="primary" (click)="startScanning()" class="scan-btn">
+          <ion-icon name="camera" slot="start"></ion-icon>
+          Start Camera Scan
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Generated Quiz Results -->
+    <div class="quiz-results" *ngIf="generatedQuestions && generatedQuestions.length > 0">
+      <div class="results-header">
+        <h2>Generated Quiz Questions</h2>
+        <p>{{ generatedQuestions.length }} questions created</p>
+      </div>
+
+      <div class="question-card" *ngFor="let question of generatedQuestions; let i = index">
+        <div class="question-number">Question {{ i + 1 }}</div>
+        <div class="question-text">{{ question.question }}</div>
+        <div class="options">
+          <div class="option" *ngFor="let option of question.options">
+            <ion-radio [value]="option" class="option-radio"></ion-radio>
+            <span>{{ option }}</span>
+          </div>
+        </div>
+        <div class="correct-answer">Correct Answer: {{ question.correctAnswer }}</div>
+      </div>
+
+      <ion-button expand="block" color="success" (click)="downloadQuiz()" class="download-btn">
+        <ion-icon name="download" slot="start"></ion-icon>
+        Download Quiz
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
