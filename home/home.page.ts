@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Navigation, Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +9,16 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class HomePage {
+  constructor(
+    private router: Router,
+    private module: MenuController
+  ) {}
 
-  constructor(private router: Router) {}
-
-  goToTechnoDev() {
-    this.router.navigate(['/technodev']);
+  async ngOnInit(){
+    await this.module.enable(false);
   }
-
+  async goToLogin() {
+    await this.module.enable(true);
+     this.router.navigateByUrl('/login');
+  }
 }
