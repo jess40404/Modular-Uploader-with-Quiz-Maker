@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; // 1. IMPORT THE ROUTER
+
+@Component({
+  selector: 'app-login', // Note: Ensure this matches your login.page.html
+  templateUrl: 'login.page.html',
+  styleUrls: ['login.page.scss'],
+  standalone: false,
+})
+export class LoginPage implements OnInit {
+  loginForm: FormGroup;
+  showPassword: boolean = false;
+  isLoading: boolean = false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router // 2. INJECT THE ROUTER
+  ) {
+    this.loginForm = this.formBuilder.group({
+      // Using simple required validators for now as per your request
+      email: ['', [Validators.required]], 
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
+    });
+  }
+
+  ngOnInit() {
+    const savedEmail = localStorage.getItem('savedEmail');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+    
+    if (rememberMe && savedEmail) {
+      this.loginForm.patchValue({
+        email: savedEmail,
+        rememberMe: true
+      });
+    }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control = this.loginForm.get(field);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
+
+
+  onLogin() {
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      
+      // Extract values
+      const { email, password, rememberMe } = this.loginForm.value;
+
+      // Handle "Remember Me" (Local Storage)
+      if (rememberMe) {
+        localStorage.setItem('savedEmail', email);
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        localStorage.removeItem('savedEmail');
+        localStorage.removeItem('rememberMe');
+      }
+
+      // Simulate API call
+      setTimeout(() => {
+        console.log('Login successful!', this.loginForm.value);
+        this.isLoading = false;
+
+        // NAVIGATE TO TECHNODEV PAGE
+        // Make sure this route is defined in your app-routing.module.ts
+        this.router.navigate(['/technodev']); 
+        
+      }, 1500);
+    }
+  }
+}

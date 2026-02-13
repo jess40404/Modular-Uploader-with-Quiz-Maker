@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      TechnoDev
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="login-container">
+    <div class="logo-section">
+      <div class="header-group">
+        <ion-icon name="lock-closed-outline" class="logo-icon"></ion-icon>
+        <h1>Welcome Back</h1>
+      </div>
+      <p>Login to your account</p>
+    </div>
+
+    <ion-card class="login-card">
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <!-- Email/Username Field -->
+          <div class="form-group">
+            <ion-label position="floating">Email or Username</ion-label>
+            <ion-input 
+              type="text"
+              formControlName="email"
+              placeholder="Enter your email or username"
+              class="form-input"
+            ></ion-input>
+            <div class="error-message" *ngIf="isFieldInvalid('email')">
+              <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required</small>
+              <small *ngIf="loginForm.get('email')?.hasError('pattern')">Please enter a valid email</small>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <ion-label position="floating">Password</ion-label>
+            <ion-input 
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter your password"
+              class="form-input"
+            ></ion-input>
+            
+            <ion-button 
+              type="button" 
+              fill="clear" 
+              size="small" 
+              (click)="togglePasswordVisibility()" 
+              class="toggle-password"
+            >
+              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+            </ion-button>
+            
+            </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="form-options">
+            <div class="remember-me">
+              <ion-checkbox formControlName="rememberMe"></ion-checkbox>
+              <span>Remember me</span>
+            </div>
+            <ion-button fill="clear" size="small" class="forgot-password">
+              Forgot Password?
+            </ion-button>
+          </div>
+
+          <!-- Login Button -->
+          <ion-button 
+            type="submit" 
+            expand="block" 
+            color="primary" 
+            [disabled]="!loginForm.valid || isLoading"
+            class="login-button"
+          >
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span *ngIf="!isLoading">Login</span>
+          </ion-button>
+
+          <!-- Sign Up Link -->
+          <div class="signup-section">
+            <span>Don't have an account?</span>
+            <ion-button fill="clear" size="small" class="signup-button">Sign Up</ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

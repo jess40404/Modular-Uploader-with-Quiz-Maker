@@ -1,0 +1,180 @@
+.login-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  // This targets the scrollable area inside ion-content
+  &::part(scroll) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  // Removed margin-top/bottom to let flex handle centering
+  animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 40px;
+  color: white;
+
+  .header-group {
+    display: flex;
+    align-items: center;    // Centers items vertically relative to each other
+    justify-content: center; // Centers the whole group horizontally
+    gap: 15px;              // Adds space between the lock and the text
+    margin-bottom: 5px;     // Space between header and the "Sign in" paragraph
+  }
+
+  .logo-icon {
+    font-size: 42px;        // Slightly smaller to match text height better
+    display: inline-block;  // Changed from block to inline-block
+    margin: 0;              // Remove previous bottom margin
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;              // Remove margins to prevent alignment shifts
+    line-height: 1;
+  }
+
+  p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
+.login-card {
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  margin: 0;
+
+  ion-card-content {
+    padding: 30px 20px;
+  }
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+
+  ion-input {
+    // Add padding-right so text doesn't go under the eye icon
+    --padding-end: 45px; 
+    border-bottom: 2px solid #e0e0e0;
+    --background: transparent;
+    font-size: 16px;
+
+    &:focus {
+      border-bottom-color: #667eea;
+    }
+  }
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0;
+  bottom: 5px; // Adjusted to align better with the input line
+  z-index: 10;   // Ensures it stays above the input layer
+  --padding-end: 0;
+  --padding-start: 0;
+  margin: 0;
+  height: 32px;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 8px;
+  display: block;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 30px 0;
+
+  .remember-me {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+
+    ion-checkbox {
+      --checkbox-background-checked: #667eea;
+    }
+  }
+
+  .forgot-password {
+    --color: #667eea;
+    font-size: 14px;
+    text-decoration: none;
+  }
+}
+
+.login-button {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-weight: 600;
+  font-size: 16px;
+  height: 48px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 20px 0;
+
+  ion-spinner {
+    margin-right: 10px;
+  }
+
+  &:disabled {
+    --background: #ccc;
+  }
+}
+
+.signup-section {
+  display: flex;          // Align items in a row
+  align-items: center;    // Vertical centering
+  justify-content: center; // Horizontal centering
+  margin-top: 20px;
+  font-size: 14px;
+  color: white;           // Changed to white to be visible against the gradient background
+
+  span {
+    opacity: 0.9;
+  }
+
+  .signup-button {
+    --padding-start: 5px; // Small gap between text and button
+    --padding-end: 0;
+    --color: #ffffff;     // Making the button white/bold to stand out
+    font-weight: 700;
+    margin: 0;
+    height: auto;         // Removes the fixed height of the button
+    min-height: unset;    // Allows it to shrink to the text size
+    text-transform: none; // Keeps it from being all caps if your theme defaults to that
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
