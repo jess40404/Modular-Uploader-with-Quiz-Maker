@@ -11,12 +11,16 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'signup', // Added this block
+    loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
+  },
+  {
     path: 'technodev',
     loadChildren: () => import('./TechnoDev/technodev.module').then(m => m.TechnoDevPageModule)
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'home', // Changed from 'home' to 'login' so users start at the login screen
     pathMatch: 'full'
   }
 ];
