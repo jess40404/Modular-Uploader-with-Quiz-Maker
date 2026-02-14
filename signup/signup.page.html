@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>TechnoDev Squad</ion-title>
+    <ion-buttons slot="start">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="login-container">
+    <div class="logo-section">
+      <div class="header-group">
+        <ion-icon name="person-add-outline" class="logo-icon"></ion-icon>
+        <h1>Create Account</h1>
+      </div>
+      <p>Join the TechnoDev Squad today</p>
+    </div>
+
+    <ion-card class="login-card">
+      <ion-card-content>
+        <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+          
+          <div class="form-group">
+            <ion-label position="floating">Full Name</ion-label>
+            <ion-input type="text" formControlName="fullName" placeholder="Enter your full name"></ion-input>
+          </div>
+
+          <div class="form-group">
+            <ion-label position="floating">Email Address</ion-label>
+            <ion-input type="email" formControlName="email" placeholder="Enter your email"></ion-input>
+          </div>
+
+          <div class="form-group">
+            <ion-label position="floating">Password</ion-label>
+            <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Create a password"></ion-input>
+            <ion-button type="button" fill="clear" size="small" (click)="togglePasswordVisibility()" class="toggle-password">
+              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+            </ion-button>
+          </div>
+
+          <div class="form-group">
+            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Repeat your password"></ion-input>
+          </div>
+
+          <ion-button 
+            type="submit" 
+            expand="block" 
+            color="primary" 
+            [disabled]="!signupForm.valid || isLoading"
+            class="login-button"
+          >
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span *ngIf="!isLoading">Create Account</span>
+          </ion-button>
+
+          <div class="signup-section">
+            <span>Already have an account?</span>
+            <ion-button fill="clear" size="small" class="signup-button" (click)="goToLogin()">Login</ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
