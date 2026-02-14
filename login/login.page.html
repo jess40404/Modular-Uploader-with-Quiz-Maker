@@ -1,8 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      TechnoDev
-    </ion-title>
+    <ion-title>TechnoDev Squad</ion-title>
+    <ion-buttons slot="start">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -21,11 +21,11 @@
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
           <!-- Email/Username Field -->
           <div class="form-group">
-            <ion-label position="floating">Email or Username</ion-label>
+            <ion-label position="floating">Email</ion-label>
             <ion-input 
               type="text"
               formControlName="email"
-              placeholder="Enter your email or username"
+              placeholder="Enter your email"
               class="form-input"
             ></ion-input>
             <div class="error-message" *ngIf="isFieldInvalid('email')">
@@ -82,7 +82,7 @@
           <!-- Sign Up Link -->
           <div class="signup-section">
             <span>Don't have an account?</span>
-            <ion-button fill="clear" size="small" class="signup-button">Sign Up</ion-button>
+            <ion-button (click)="goToSignup()" fill="clear" size="small" class="signup-button">Sign Up</ion-button>
           </div>
         </form>
       </ion-card-content>
