@@ -14,19 +14,6 @@
   width: 100%;
   max-width: 400px;
   padding: 20px;
-  // Removed margin-top/bottom to let flex handle centering
-  animation: slideUp 0.5s ease-in-out;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .logo-section {
@@ -158,15 +145,13 @@
   font-size: 14px;
   color: white;           // Changed to white to be visible against the gradient background
 
-  span {
-    opacity: 0.9;
-  }
 
   .signup-button {
-    --padding-start: 5px; // Small gap between text and button
-    --padding-end: 0;
+    --padding-start: 15px; // Small gap between text and button
+    --padding-bottom: 8px; // Adjusted padding for better click area
     --color: #ffffff;     // Making the button white/bold to stand out
-    font-weight: 700;
+    font-weight: 800;
+    font-size: larger;
     margin: 0;
     height: auto;         // Removes the fixed height of the button
     min-height: unset;    // Allows it to shrink to the text size
